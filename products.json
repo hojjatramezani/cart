@@ -1,0 +1,103 @@
+{
+    "items": [
+      {
+        "sys": { "id": "1" },
+        "fields": {
+          "title": "Hat 2020",
+          "price": 20,
+          "image": { "fields": { "file": { "url": "./images/kala01.jpg" } } }
+        }
+      },
+      {
+        "sys": { "id": "2" },
+        "fields": {
+          "title": "the watch Lg",
+          "price": 29,
+          "image": { "fields": { "file": { "url": "./images/kala02.jpg" } } }
+        }
+      },
+      {
+        "sys": { "id": "3" },
+        "fields": {
+          "title": "headphone Lenovo",
+          "price": 90,
+          "image": { "fields": { "file": { "url": "./images/kala03.jpg" } } }
+        }
+      },
+      {
+        "sys": { "id": "4" },
+        "fields": {
+          "title": "T-shirt 430093",
+          "price": 99,
+          "image": { "fields": { "file": { "url": "./images/kala04.jpg" } } }
+        }
+      },
+      {
+        "sys": { "id": "5" },
+        "fields": {
+          "title": "jacket RT",
+          "price": 30,
+          "image": { "fields": { "file": { "url": "./images/kala05.jpg" } } }
+        }
+      },
+      {
+        "sys": { "id": "6" },
+        "fields": {
+          "title": "Samsoung A12",
+          "price": 59,
+          "image": { "fields": { "file": { "url": "./images/kala06.jpg" } } }
+        }
+      },
+      {
+        "sys": { "id": "7" },
+        "fields": {
+          "title": "Googel Pixel 2022",
+          "price": 120,
+          "image": { "fields": { "file": { "url": "./images/kala07.jpg" } } }
+        }
+      },
+      {
+        "sys": { "id": "8" },
+        "fields": {
+          "title": "iphon 8",
+          "price": 49,
+          "image": { "fields": { "file": { "url": "./images/kala08.jpg" } } }
+        }
+      },
+      {
+        "sys": { "id": "9" },
+        "fields": {
+          "title": "huawei A10",
+          "price": 100,
+          "image": { "fields": { "file": { "url": "./images/kala09.jpg" } } }
+        }
+      },
+      {
+        "sys": { "id": "10" },
+        "fields": {
+          "title": "Samsoung A11 2019",
+          "price": 145,
+          "image": { "fields": { "file": { "url": "./images/kala10.jpg" } } }
+        }
+      },
+      {
+        "sys": { "id": "11" },
+        "fields": {
+          "title": "iphone 13 pro",
+          "price": 105,
+          "image": { "fields": { "file": { "url": "./images/kala11.jpg" } } }
+        }
+      },
+      {
+        "sys": { "id": "12" },
+        "fields": {
+          "title": "shoe",
+          "price": 10,
+          "image": { "fields": { "file": { "url": "./images/kala12.jpg" } } }
+        }
+      }
+
+
+    ]
+  }
+  
