@@ -2,6 +2,8 @@
 const partProducts = document.querySelector('.part-products');
 const drawerCaartItem = document.querySelector('.drawer-cart-item');
 const cartNumber = document.querySelector('.cart-number');
+const drawerCartItem = document.querySelector('.drawer-cart-item');
+
 let cart = [];
 
 class Products {
@@ -99,6 +101,14 @@ class View {
             drawerCaartItem.innerHTML = result;
         });
     }
+
+    drawerCartItem(){
+        drawerCartItem.addEventListener('click', (event) => {
+            let detailsItem = event.target
+            let id = detailsItem.dataset.id
+
+        })
+    }
     
 
 
@@ -138,6 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }).then(() => {
         view.getCartButtons();
         view.printCartItem(cart);
+        view.drawerCartItem();
     });
 
 
