@@ -3,9 +3,10 @@ const partProducts = document.querySelector('.part-products');
 const drawerCaartItem = document.querySelector('.drawer-cart-item');
 const cartNumber = document.querySelector('.cart-number');
 const drawerCartItem = document.querySelector('.drawer-cart-item');
+const totalElement = document.querySelector('.total');
 
 let cart = [];
-
+let total = 0;
 class Products {
 
     async getProductJSON() {
@@ -59,11 +60,19 @@ class View {
         buttons.forEach((item) => {
             const id = item.dataset.id;
             item.addEventListener('click', (event) => {
-                cart = [...cart, { ...Storage.getLocalStorage(id), amount: 0 }];
-                console.log(cart);
-                this.cartNumber();
-                Storage.saveCartToLocalstorage(cart);
-                this.printCartItem(cart);
+                let findItem = cart.find(item => item.id === id);
+                console.log(findItem);
+                if (!Boolean(findItem)) {
+                    cart = [...cart, { ...Storage.getLocalStorage(id), amount: 1 }];
+                    console.log(cart);
+                    this.cartNumber();
+                    Storage.saveCartToLocalstorage(cart);
+                    this.printCartItem(cart);
+                    
+                }else{
+                    alert('This product has already been selected.')
+                }
+
             });
         });
     }
@@ -71,7 +80,7 @@ class View {
         let result = '';
         data.forEach((item) => {
             result += `
-                    <div class="flex justify-between px-4 py-2 border-b">
+                <div class="flex justify-between px-4 py-2 border-b select-none">
                     <div class="flex justify-left">
                         <div class="flex-col justify-center">
                             <img src=${ item.image } class="w-14 h-14 object-cover" />
@@ -86,30 +95,58 @@ class View {
                     <div class="flex-col justify-center">
 
                         <svg data-id=${ item.id } xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 cursor-pointer plus-item" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clip-rule="evenodd" />
+                            <path data-id=${ item.id } class="plus-item" fill-rule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clip-rule="evenodd" />
                         </svg>
 
                         <p class="text-center">${ item.amount }</p>
 
-                        <svg data-id=${ item.id } xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 cursor-pointer" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        <svg data-id=${ item.id } xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 cursor-pointer minus-item" viewBox="0 0 20 20" fill="currentColor">
+                            <path data-id=${ item.id } class="minus-item" fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                         </svg>
 
                     </div>
                 </div>
             `;
             drawerCaartItem.innerHTML = result;
+            this.calcuteTotal(cart);
         });
     }
 
-    drawerCartItem(){
+    drawerCartItem() {
         drawerCartItem.addEventListener('click', (event) => {
-            let detailsItem = event.target
-            let id = detailsItem.dataset.id
+            let detailsItem = event.target;
+            let id = detailsItem.dataset.id;
 
-        })
+            if (detailsItem.classList.contains('plus-item')) {
+                let product = cart.find((item) => {
+                    return item.id === id;
+                });
+                product.amount = product.amount + 1;
+            }
+
+            if (detailsItem.classList.contains('minus-item')) {
+                let product = cart.find((item) => {
+                    return item.id === id;
+                });
+                if (product.amount > 1) {
+                    product.amount = product.amount - 1;
+                }
+            }
+
+            Storage.saveCartToLocalstorage(cart);
+            this.printCartItem(cart);
+
+
+        });
     }
-    
+    calcuteTotal(products){
+        total = 0;
+        products.forEach((item) => {
+            total = total + (item.price * item.amount);
+        })
+        totalElement.innerText = total;
+    }
+
 
 
 }
