@@ -32,7 +32,6 @@ class Products {
 }
 class View {
     printProducts(data) {
-        console.log(data);
         let result = '';
         data.forEach((item) => {
             result += `
@@ -61,16 +60,14 @@ class View {
             const id = item.dataset.id;
             item.addEventListener('click', (event) => {
                 let findItem = cart.find(item => item.id === id);
-                console.log(findItem);
                 if (!Boolean(findItem)) {
                     cart = [...cart, { ...Storage.getLocalStorage(id), amount: 1 }];
-                    console.log(cart);
                     this.cartNumber();
                     Storage.saveCartToLocalstorage(cart);
                     this.printCartItem(cart);
-                    
-                }else{
-                    alert('This product has already been selected.')
+
+                } else {
+                    alert('This product has already been selected.');
                 }
 
             });
@@ -84,7 +81,7 @@ class View {
                     <div class="flex justify-left">
                         <div class="flex-col justify-center">
                             <img src=${ item.image } class="w-14 h-14 object-cover" />
-                            <button data-id=${ item.id } class="rounded-sm px-1 text-white bg-red-400 text-sm w-14">delele</button>
+                            <button data-id=${ item.id } class="delete rounded-sm px-1 text-white bg-red-400 text-sm w-14">delete</button>
                         </div>
                         <div class="pl-4">
                             <p>${ item.title }</p>
@@ -133,18 +130,70 @@ class View {
                 }
             }
 
-            Storage.saveCartToLocalstorage(cart);
-            this.printCartItem(cart);
+            // if (detailsItem.classList.contains('delele')) {
+            //     this.deleteItems(id);
+            // }
+
+            if (!detailsItem.classList.contains('delete')) {
+                Storage.saveCartToLocalstorage(cart);
+                this.printCartItem(cart);
+                console.log('drawerCartItem');
+            }
+
 
 
         });
     }
-    calcuteTotal(products){
+    calcuteTotal(products) {
         total = 0;
         products.forEach((item) => {
             total = total + (item.price * item.amount);
-        })
+        });
         totalElement.innerText = total;
+    }
+
+    // deleteItems(item = 'all') {
+    //     if (item === 'all') {
+    //         cart = [];
+    //         drawerCartItem.innerHTML = '';
+    //         total = 0;
+    //         totalElement.innerText = '0';
+    //     } else {
+    //         const id = item;
+    //         const products = cart.filter((product) => {
+    //             return product.id !== id;
+    //         });
+    //         cart = [...products];
+    //         drawerCartItem.innerHTML = '';
+    //         total = 0;
+    //         totalElement.innerText = '0';
+    //     }
+    // }
+
+    deleteItems() {
+        const deleteButtons = [...document.querySelectorAll('.delete')];
+
+        deleteButtons.forEach((item) => {
+            const id = item.dataset.id;
+            console.log(deleteButtons);
+            item.addEventListener('click', (event) => {
+                // const products = cart.filter((product) => {
+                //     return product.id !== id;
+                // });
+                // cart = [...products];
+                // drawerCartItem.innerHTML = '';
+                // total = 0;
+                // totalElement.innerText = '0';
+
+                // Storage.saveCartToLocalstorage(cart);
+                // this.printCartItem(cart);
+
+                console.log(id, cart);
+            });
+
+        });
+
+
     }
 
 
@@ -186,6 +235,7 @@ document.addEventListener('DOMContentLoaded', () => {
         view.getCartButtons();
         view.printCartItem(cart);
         view.drawerCartItem();
+        view.deleteItems();
     });
 
 
