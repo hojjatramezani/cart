@@ -1,9 +1,13 @@
-
 const partProducts = document.querySelector('.part-products');
 const drawerCaartItem = document.querySelector('.drawer-cart-item');
 const cartNumber = document.querySelector('.cart-number');
 const drawerCartItem = document.querySelector('.drawer-cart-item');
 const totalElement = document.querySelector('.total');
+const deleteAll = document.querySelector('.delete-all');
+const backdrop = document.querySelector('.d-backdrop');
+const drawer = document.querySelector('.d-drawer');
+const cartNumberIcon = document.querySelector('.cart-number-icon');
+
 
 let cart = [];
 let total = 0;
@@ -65,6 +69,7 @@ class View {
                     this.cartNumber();
                     Storage.saveCartToLocalstorage(cart);
                     this.printCartItem(cart);
+                    this.showDrawer();
 
                 } else {
                     alert('This product has already been selected.');
@@ -130,14 +135,9 @@ class View {
                 }
             }
 
-            // if (detailsItem.classList.contains('delele')) {
-            //     this.deleteItems(id);
-            // }
-
             if (!detailsItem.classList.contains('delete')) {
                 Storage.saveCartToLocalstorage(cart);
                 this.printCartItem(cart);
-                console.log('drawerCartItem');
             }
 
 
@@ -152,48 +152,52 @@ class View {
         totalElement.innerText = total;
     }
 
-    // deleteItems(item = 'all') {
-    //     if (item === 'all') {
-    //         cart = [];
-    //         drawerCartItem.innerHTML = '';
-    //         total = 0;
-    //         totalElement.innerText = '0';
-    //     } else {
-    //         const id = item;
-    //         const products = cart.filter((product) => {
-    //             return product.id !== id;
-    //         });
-    //         cart = [...products];
-    //         drawerCartItem.innerHTML = '';
-    //         total = 0;
-    //         totalElement.innerText = '0';
-    //     }
-    // }
-
     deleteItems() {
-        const deleteButtons = [...document.querySelectorAll('.delete')];
+        drawerCartItem.addEventListener('click', (event) => {
 
-        deleteButtons.forEach((item) => {
-            const id = item.dataset.id;
-            console.log(deleteButtons);
-            item.addEventListener('click', (event) => {
-                // const products = cart.filter((product) => {
-                //     return product.id !== id;
-                // });
-                // cart = [...products];
-                // drawerCartItem.innerHTML = '';
-                // total = 0;
-                // totalElement.innerText = '0';
+            let detailsItem = event.target;
+            let id = detailsItem.dataset.id;
 
-                // Storage.saveCartToLocalstorage(cart);
-                // this.printCartItem(cart);
-
-                console.log(id, cart);
-            });
-
+            if (detailsItem.classList.contains('delete')) {
+                const products = cart.filter((product) => {
+                    return product.id !== id;
+                });
+                cart = [...products];
+                drawerCartItem.innerHTML = '';
+                total = 0;
+                totalElement.innerText = '0';
+                Storage.saveCartToLocalstorage(cart);
+                this.printCartItem(cart);
+                this.cartNumber();
+            }
         });
 
+        deleteAll.addEventListener('click', (event) => {
+            cart = [];
+            drawerCartItem.innerHTML = '';
+            total = 0;
+            totalElement.innerText = '0';
+            Storage.saveCartToLocalstorage(cart);
+            this.printCartItem(cart);
+            this.cartNumber();
 
+        });
+    }
+
+    showDrawer() {
+        backdrop.classList.remove("hidden");
+        drawer.classList.remove("hidden");
+        backdrop.addEventListener('click', () => {
+            backdrop.classList.add("hidden");
+            drawer.classList.add("hidden");
+        });
+
+        cartNumberIcon.addEventListener('click', () => {
+            backdrop.classList.remove("hidden");
+            drawer.classList.remove("hidden");
+        });
+
+        cartNumberIcon
     }
 
 
@@ -236,6 +240,7 @@ document.addEventListener('DOMContentLoaded', () => {
         view.printCartItem(cart);
         view.drawerCartItem();
         view.deleteItems();
+
     });
 
 
